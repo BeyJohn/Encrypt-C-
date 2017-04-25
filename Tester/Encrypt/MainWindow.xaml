@@ -5,12 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Encrypt"
         mc:Ignorable="d"
-        Title="Encrypter" Height="400" Width="600">
+        Title="Encrypter" Height="400" Width="600" WindowStartupLocation="CenterScreen">
     <Grid>
-        <ComboBox x:Name="cbItems" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="300,90,0,0"/>
-        <TextBlock x:Name="tbPrompt" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="90,134,0,0" Height="100" Width="410" Text="Choose file to encrypt and enter new file's name."/>
-        <TextBox x:Name="tbNewFile" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="90,90,0,0" AutomationProperties.HelpText="Enter encrypted file name."/>
-        <Button Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="410" Margin="90,287,0,0" Height="32" Click="Button_Click"/>
-
+        <ComboBox x:Name="cbItems" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="300,90,0,0" />
+        <TextBlock x:Name="tbPrompt" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="90,134,0,0" Height="100" Width="410" Text="Choose file to encrypt and enter new file's name." />
+        <TextBox x:Name="tbNewFile" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="90,90,0,0" AutomationProperties.HelpText="Enter encrypted file name." />
+        <Button Content="Encrypt" HorizontalAlignment="Left" VerticalAlignment="Top" Width="410" Margin="90,287,0,0" Height="32" Click="Button_Click" />
     </Grid>
 </Window>
