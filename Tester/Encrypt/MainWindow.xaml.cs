@@ -1,18 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Encrypt
 {
@@ -21,40 +10,37 @@ namespace Encrypt
     {
 
         private static List<string> files;
-        private static bool done;
+		private string loc;
 
         public MainWindow()
         {
             InitializeComponent();
-            done = false;
-            files = new List<string>();
-            GetFiles();
-            foreach(string f in files)
+
+			loc = AppDomain.CurrentDomain.BaseDirectory;
+			files = new List<string>();
+
+			GetFiles();
+			foreach (string f in files)
                 cbItems.Items.Add(f);
         }
 
         private void GetFiles()
         {
-            if(File.GetAttributes(AppDomain.CurrentDomain.BaseDirectory).ToString() == "Directory")
+            DirectoryInfo d = new DirectoryInfo(loc);
+            foreach (FileInfo h in d.GetFiles())
             {
-                string[] f = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory);
-                foreach(string h in f)
+                if(File.GetAttributes(h.Name).ToString() != "Directory")
                 {
-                    if(File.GetAttributes(h).ToString() != "Directory")
-                    {
-                        //tbPrompt.Text += "\n" + h.Substring(AppDomain.CurrentDomain.BaseDirectory.ToString().Length) + ":" + File.GetAttributes(h).ToString();
-                        files.Add(h.Substring(AppDomain.CurrentDomain.BaseDirectory.ToString().Length));
-                    }
+                    files.Add(h.Name);
                 }
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(tbNewFile.Text != "" && cbItems.Text != "" && !done)
+            if(tbNewFile.Text != "" && cbItems.Text != "")
             {
-                Start(AppDomain.CurrentDomain.BaseDirectory + cbItems.Text, AppDomain.CurrentDomain.BaseDirectory + tbNewFile.Text);
-                done = true;
+                Start(loc + cbItems.Text, loc + tbNewFile.Text);
             }
         }
 
@@ -96,9 +82,7 @@ namespace Encrypt
             const string Digits = "0123";
 
             int radix = 4;
-
-            if (radix < 2 || radix > Digits.Length)
-                throw new ArgumentException("The radix must be >= 2 and <= " + Digits.Length.ToString());
+			
 
             if (decimalNumber == 0)
                 return "0";
@@ -115,10 +99,6 @@ namespace Encrypt
             }
 
             string result = new String(charArray, index + 1, BitsInInt - index - 1);
-            if (decimalNumber < 0)
-            {
-                result = "-" + result;
-            }
 
             return result;
         }

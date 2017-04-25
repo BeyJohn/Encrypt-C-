@@ -1,18 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Decrypt
 {
@@ -21,40 +10,37 @@ namespace Decrypt
     {
 
         private static List<string> files;
-        private static bool done;
+		private string loc;
 
-        public MainWindow()
+		public MainWindow()
         {
             InitializeComponent();
-            done = false;
-            files = new List<string>();
+
+			loc = AppDomain.CurrentDomain.BaseDirectory;
+			files = new List<string>();
+
             GetFiles();
             foreach (string f in files)
                 cbItems.Items.Add(f);
         }
 
-        private void GetFiles()
-        {
-            if (File.GetAttributes(AppDomain.CurrentDomain.BaseDirectory).ToString() == "Directory")
-            {
-                string[] f = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory);
-                foreach (string h in f)
-                {
-                    if (File.GetAttributes(h).ToString() != "Directory")
-                    {
-                        //tbPrompt.Text += "\n" + h.Substring(AppDomain.CurrentDomain.BaseDirectory.ToString().Length) + ":" + File.GetAttributes(h).ToString();
-                        files.Add(h.Substring(AppDomain.CurrentDomain.BaseDirectory.ToString().Length));
-                    }
-                }
-            }
-        }
+		private void GetFiles()
+		{
+			DirectoryInfo d = new DirectoryInfo(loc);
+			foreach (FileInfo h in d.GetFiles())
+			{
+				if (File.GetAttributes(h.Name).ToString() != "Directory")
+				{
+					files.Add(h.Name);
+				}
+			}
+		}
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+		private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (tbNewFile.Text != "" && cbItems.Text != "" && !done)
+            if (tbNewFile.Text != "" && cbItems.Text != "")
             {
-                Start(AppDomain.CurrentDomain.BaseDirectory + cbItems.Text, AppDomain.CurrentDomain.BaseDirectory + tbNewFile.Text);
-                done = true;
+                Start(loc + cbItems.Text, loc + tbNewFile.Text);
             }
         }
 
