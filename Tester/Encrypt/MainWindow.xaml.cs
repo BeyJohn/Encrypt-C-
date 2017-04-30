@@ -63,26 +63,27 @@ namespace Encrypt
 			string h = "";
 			for (int o = 0; o < g.Length; o++)
 			{
-				char[] c = g.ToCharArray();
-				h += DecimalToBaseFour(c[o]);
-				h = h.Replace('0', 'G').Replace('1', 'C').Replace('2', 'A').Replace('3', 'T');
+				h += DecimalToBaseFour(g[o]);
 			}
-			return h;
+			
+			return h.Replace('0', 'G').Replace('1', 'C').Replace('2', 'A').Replace('3', 'T');
 		}
 
-		public string DecimalToBaseFour(char decimalNumber)
+		public string DecimalToBaseFour(int decimalNumber)
 		{
-			int index = 3;
-			long currentNumber = Math.Abs(decimalNumber);
-			char[] charArray = new char[4];
+			string newNum = "";
 
-			while (index >= 0)
+			while (decimalNumber > 0)
 			{
-				charArray[index--] = (char)(currentNumber % 4);
-				currentNumber = currentNumber / 4;
+				newNum = (decimalNumber % 4) + newNum;
+				decimalNumber = decimalNumber / 4;
+			}
+			while (newNum.Length < 4)
+			{
+				newNum = 0 + newNum;
 			}
 
-			return new String(charArray);
+			return newNum;
 		}
 	}
 }
